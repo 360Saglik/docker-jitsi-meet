@@ -183,6 +183,9 @@ services:
             - ENABLE_GUESTS
             - ENABLE_IPV6
             - ENABLE_LOBBY
+            - ENABLE_PLUGIN_EVENT_SYNC
+            - PLUGIN_EVENT_SYNC_API_PREFIX
+            - PLUGIN_EVENT_SYNC_API_TOKEN
             - ENABLE_RECORDING
             - ENABLE_S2S
             - ENABLE_VISITORS
