@@ -25,7 +25,7 @@ jobs:
           context: ./base
           load: true
           tags: |
-            ${JITSI_REPO}/base:latest
+            ${{ secrets.JITSI_REPO }}/base:latest
           build-args: |
             JITSI_RELEASE=unstable
 
@@ -35,7 +35,7 @@ jobs:
           context: ./base-java
           load: true
           tags: |
-            ${JITSI_REPO}/base-java:latest
+            ${{ secrets.JITSI_REPO }}/base-java:latest
 
       - name: Build jibri
         uses: docker/build-push-action@v2
@@ -43,7 +43,7 @@ jobs:
           context: ./jibri
           load: true
           tags: |
-            ${JITSI_REPO}/jibri:latest
+            ${{ secrets.JITSI_REPO }}/jibri:latest
 
       - name: Build jicofo
         uses: docker/build-push-action@v2
@@ -51,7 +51,7 @@ jobs:
           context: ./jicofo
           load: true
           tags: |
-            ${JITSI_REPO}/jicofo:latest
+            ${{ secrets.JITSI_REPO }}/jicofo:latest
 
       - name: Build jigasi
         uses: docker/build-push-action@v2
@@ -59,7 +59,7 @@ jobs:
           context: ./jigasi
           load: true
           tags: |
-            ${JITSI_REPO}/jigasi:latest
+            ${{ secrets.JITSI_REPO }}/jigasi:latest
 
       - name: Build jvb
         uses: docker/build-push-action@v2
@@ -67,7 +67,7 @@ jobs:
           context: ./jvb
           load: true
           tags: |
-            ${JITSI_REPO}/jvb:latest
+            ${{ secrets.JITSI_REPO }}/jvb:latest
 
       - name: Build prosody
         uses: docker/build-push-action@v2
@@ -75,7 +75,7 @@ jobs:
           context: ./prosody
           load: true
           tags: |
-            ${JITSI_REPO}/prosody:latest
+            ${{ secrets.JITSI_REPO }}/prosody:latest
 
       - name: Build web
         uses: docker/build-push-action@v2
@@ -83,4 +83,4 @@ jobs:
           context: ./web
           load: true
           tags: |
-            ${JITSI_REPO}/web:latest
+            ${{ secrets.JITSI_REPO }}/web:latest
