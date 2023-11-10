@@ -51,6 +51,9 @@
 {{ $RATE_LIMIT_ALLOW_RANGES := .Env.PROSODY_RATE_LIMIT_ALLOW_RANGES | default "10.0.0.0/8" -}}
 {{ $RATE_LIMIT_CACHE_SIZE := .Env.PROSODY_RATE_LIMIT_CACHE_SIZE | default "10000" -}}
 {{ $ENV := .Env -}}
+{{ $PLUGIN_EVENT_SYNC_ENABLED := .Env.PLUGIN_EVENT_SYNC_ENABLED | default "false" | toBool -}}
+{{ $PLUGIN_EVENT_SYNC_API_PREFIX := .Env.PLUGIN_EVENT_SYNC_API_PREFIX | default "" - }}
+{{ $PLUGIN_EVENT_SYNC_API_TOKEN := .Env.PLUGIN_EVENT_SYNC_API_TOKEN | default "" - }}
 
 admins = {
     {{ if .Env.JIGASI_XMPP_PASSWORD }}
@@ -431,6 +434,12 @@ Component "breakout.{{ $XMPP_DOMAIN }}" "muc"
         "{{ join "\";\n        \"" (splitList "," .Env.XMPP_BREAKOUT_MUC_MODULES) }}";
         {{ end -}}
     }
+{{ end }}
+
+{{ if $PLUGIN_EVENT_SYNC_ENABLED }}
+Component "event_sync.{{ $XMPP_DOMAIN }}" "event_sync_component"
+    muc_component = "{{ $XMPP_MUC_DOMAIN }}"
+    api_prefix = "{{ $PLUGIN_EVENT_SYNC_API_PREFIX }}"
 {{ end }}
 
 Component "metadata.{{ $XMPP_DOMAIN }}" "room_metadata_component"
