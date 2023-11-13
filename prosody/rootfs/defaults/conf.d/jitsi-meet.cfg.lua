@@ -449,6 +449,7 @@ Component "visitors.{{ $XMPP_DOMAIN }}" "visitors_component"
 {{ if $ENABLE_EVENT_SYNC }}
 Component "event_sync.{{ $XMPP_DOMAIN }}" "event_sync_component"
     muc_component = "{{ $XMPP_MUC_DOMAIN }}"
+    breakout_rooms_component = "breakout.{{ $XMPP_DOMAIN }}"
     api_prefix = "{{ $EVENT_SYNC_API_PREFIX }}"
     
     --- The following are all optional
