@@ -180,6 +180,9 @@ services:
             - ENABLE_AV_MODERATION
             - ENABLE_BREAKOUT_ROOMS
             - ENABLE_END_CONFERENCE
+            - ENABLE_EVENT_SYNC
+            - EVENT_SYNC_API_PREFIX
+            - EVENT_SYNC_API_TOKEN
             - ENABLE_GUESTS
             - ENABLE_IPV6
             - ENABLE_LOBBY
