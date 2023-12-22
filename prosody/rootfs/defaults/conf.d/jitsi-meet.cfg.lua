@@ -49,6 +49,7 @@
 {{ $RATE_LIMIT_ALLOW_RANGES := .Env.PROSODY_RATE_LIMIT_ALLOW_RANGES | default "10.0.0.0/8" -}}
 {{ $RATE_LIMIT_CACHE_SIZE := .Env.PROSODY_RATE_LIMIT_CACHE_SIZE | default "10000" -}}
 {{ $ENV := .Env -}}
+{{ $ENABLE_EVENT_SYNC := .Env.ENABLE_EVENT_SYNC | default "0" | toBool -}}
 
 admins = {
     {{ if .Env.JIGASI_XMPP_PASSWORD }}
@@ -208,6 +209,15 @@ VirtualHost "{{ $XMPP_DOMAIN }}"
         {{ if $PROSODY_RESERVATION_ENABLED }}
         "reservations";
         {{ end }}
+<<<<<<< HEAD
+=======
+        {{ if $ENABLE_VISITORS }}
+        "visitors";
+        {{ end }}
+        {{ if $ENABLE_EVENT_SYNC }}
+        "event_sync";
+        {{ end }}
+>>>>>>> 66e598c (Add ENABLE_EVENT_SYNC to docker-compose.yml and jitsi-meet.cfg.lua)
     }
 
     main_muc = "{{ $XMPP_MUC_DOMAIN }}"
@@ -404,3 +414,27 @@ Component "breakout.{{ $XMPP_DOMAIN }}" "muc"
 Component "metadata.{{ $XMPP_DOMAIN }}" "room_metadata_component"
     muc_component = "{{ $XMPP_MUC_DOMAIN }}"
     breakout_rooms_component = "breakout.{{ $XMPP_DOMAIN }}"
+<<<<<<< HEAD
+=======
+
+
+{{ if $ENABLE_VISITORS }}
+Component "visitors.{{ $XMPP_DOMAIN }}" "visitors_component"
+    auto_allow_visitor_promotion = true
+{{ end }}
+
+{{ if $ENABLE_EVENT_SYNC }}
+Component "event_sync.{{ $XMPP_DOMAIN }}" "event_sync_component"
+    muc_component = "conference.{{ $XMPP_DOMAIN }}"
+    breakout_component = "breakout.{{ $XMPP_DOMAIN }}"
+
+    api_prefix = "https://webhook.site/87a5c6bf-231e-46e3-9355-7e588ef6bdc9"
+    
+    --- The following are all optional
+    api_headers = {
+        ["Authorization"] = "Bearer TOKEN-237958623045";
+    }
+    -- Optionally include total_dominant_speaker_time (milliseconds) in payload for occupant-left and room-destroyed
+    include_speaker_stats = true
+{{ end }}
+>>>>>>> 66e598c (Add ENABLE_EVENT_SYNC to docker-compose.yml and jitsi-meet.cfg.lua)
