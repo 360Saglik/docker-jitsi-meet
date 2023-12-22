@@ -188,6 +188,7 @@ services:
             - ENABLE_VISITORS
             - ENABLE_XMPP_WEBSOCKET
             - ENABLE_JAAS_COMPONENTS
+            - ENABLE_EVENT_SYNC
             - GC_TYPE
             - GC_INC_TH
             - GC_INC_SPEED

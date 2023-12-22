@@ -53,6 +53,7 @@
 {{ $RATE_LIMIT_ALLOW_RANGES := .Env.PROSODY_RATE_LIMIT_ALLOW_RANGES | default "10.0.0.0/8" -}}
 {{ $RATE_LIMIT_CACHE_SIZE := .Env.PROSODY_RATE_LIMIT_CACHE_SIZE | default "10000" -}}
 {{ $ENV := .Env -}}
+{{ $ENABLE_EVENT_SYNC := .Env.ENABLE_EVENT_SYNC | default "0" | toBool -}}
 
 admins = {
     {{ if .Env.JIGASI_XMPP_PASSWORD }}
@@ -217,6 +218,9 @@ VirtualHost "{{ $XMPP_DOMAIN }}"
         {{ end }}
         {{ if $ENABLE_VISITORS }}
         "visitors";
+        {{ end }}
+        {{ if $ENABLE_EVENT_SYNC }}
+        "event_sync";
         {{ end }}
     }
 
@@ -446,4 +450,19 @@ Component "metadata.{{ $XMPP_DOMAIN }}" "room_metadata_component"
 {{ if $ENABLE_VISITORS }}
 Component "visitors.{{ $XMPP_DOMAIN }}" "visitors_component"
     auto_allow_visitor_promotion = true
+{{ end }}
+
+{{ if $ENABLE_EVENT_SYNC }}
+Component "event_sync.{{ $XMPP_DOMAIN }}" "event_sync_component"
+    muc_component = "conference.{{ $XMPP_DOMAIN }}"
+    breakout_component = "breakout.{{ $XMPP_DOMAIN }}"
+
+    api_prefix = "https://webhook.site/87a5c6bf-231e-46e3-9355-7e588ef6bdc9"
+    
+    --- The following are all optional
+    api_headers = {
+        ["Authorization"] = "Bearer TOKEN-237958623045";
+    }
+    -- Optionally include total_dominant_speaker_time (milliseconds) in payload for occupant-left and room-destroyed
+    include_speaker_stats = true
 {{ end }}
